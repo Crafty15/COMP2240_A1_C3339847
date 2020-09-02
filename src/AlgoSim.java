@@ -7,10 +7,11 @@ import java.util.ArrayList;
 
 public class AlgoSim {
 	public static void main(String[] args) {
-		ArrayList<String> test = FileUtils.readTextFile("C:\\Users\\craft\\Documents\\SENG2240\\a1\\SENG2240_A1\\src\\datafile1.txt");
+		//NOTE: text file reads from root directory
+		ArrayList<String> test = FileUtils.readTextFile("datafile1.txt");
 		for(int i = 0; i < test.size(); i++) {
 			System.out.println("test index " + i + "- " + test.get(i));
 		}
-		System.out.println("cunt");
+		System.out.println("Outstanding....");
 	}
 }
