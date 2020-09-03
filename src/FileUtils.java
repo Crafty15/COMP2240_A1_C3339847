@@ -9,7 +9,7 @@ import java.util.*;
 public class FileUtils {
 	//reads the text file in lines. 
 	//takes file name as an argument, returns each line as an element in the arraylist.
-	public static ArrayList<String> readTextFile(String fileName) {
+	public static ArrayList<String> readTextFileByLine(String fileName) {
 		ArrayList<String> result = new ArrayList<String>();
 		try {
 			FileReader fRead = new FileReader(fileName);
@@ -29,4 +29,9 @@ public class FileUtils {
 		}	
 		return result;
 	}
+	
+	//read the text file as one string
+//	public static String readTextFile() {
+//		
+//	}
 }

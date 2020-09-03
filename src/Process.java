@@ -10,7 +10,7 @@ public class Process {
 	private int arrive;
 	private int execSize;
 	private int priority;
-	private int tATime;
+	private int tATime;		//turn around time: actual time to complete the job
 	private int waitTime;
 	private int quantum;
 	

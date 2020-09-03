@@ -8,10 +8,12 @@ import java.util.ArrayList;
 public class AlgoSim {
 	public static void main(String[] args) {
 		//NOTE: text file reads from root directory
-		ArrayList<String> test = FileUtils.readTextFile("datafile1.txt");
-		for(int i = 0; i < test.size(); i++) {
-			System.out.println("test index " + i + "- " + test.get(i));
-		}
-		System.out.println("Outstanding....");
+//		ArrayList<String> test = FileUtils.readTextFile("datafile1.txt");
+//		for(int i = 0; i < test.size(); i++) {
+//			System.out.println("test index " + i + "-" + test.get(i));
+//		}
+		ProcessList.createProcessList();
+		
+		System.out.println("Done. Nice.");
 	}
 }
