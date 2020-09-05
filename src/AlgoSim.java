@@ -12,8 +12,10 @@ public class AlgoSim {
 //		for(int i = 0; i < test.size(); i++) {
 //			System.out.println("test index " + i + "-" + test.get(i));
 //		}
-		ProcessList.createProcessList();
-		
+		ProcessList pl = ProcessList.createProcessList();
+//		for(int i = 0 ; i < pl.getPListSize(); i++) {
+//			
+//		}
 		System.out.println("Done. Nice.");
 	}
 }
