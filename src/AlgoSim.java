@@ -7,6 +7,8 @@ import java.util.ArrayList;
 
 public class AlgoSim {
 	public static void main(String[] args) {
+		//Note: File path will be specified in command line args
+		
 		//NOTE: text file reads from root directory
 //		ArrayList<String> test = FileUtils.readTextFile("datafile1.txt");
 //		for(int i = 0; i < test.size(); i++) {

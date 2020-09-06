@@ -54,7 +54,7 @@ public class ProcessList {
 	//NOTE: This should take an input for the file name and return a process list object
 	public static ProcessList createProcessList() {
 		ProcessList resultPList = new ProcessList();
-		String input = FileUtils.readTextFile("datafile1.txt");
+		String input = FileUtils.readTextFile("datafile2.txt");
 		String[] blocks = input.split("END");
 		//Split the string into blocks that were separated by "END"
 		for(int i = 0; i < blocks.length; i++) {
