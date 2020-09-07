@@ -15,9 +15,9 @@ public class AlgoSim {
 //			System.out.println("test index " + i + "-" + test.get(i));
 //		}
 		ProcessList pl = ProcessList.createProcessList();
-//		for(int i = 0 ; i < pl.getPListSize(); i++) {
-//			
-//		}
+		FCFS algo1 = new FCFS(pl);
+		algo1.run();
+		System.out.println(algo1.getEventLog());
 		System.out.println("Done. Nice.");
 	}
 }

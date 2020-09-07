@@ -7,23 +7,27 @@ import java.util.ArrayList;
 
 public class Process {
 	private String id;
-	private int arrive;
-	private int execSize;
-	private int execCount;
-	private int priority;
+	private int arrive;			//arrival time into the ready queue
+	private float start;			//actual start time of the process
+	private float finish;			//actual finishing time
+	private int execSize;		//Time for this process to execute fully
+	private int execCount;		//Used when a process gets interrupted to track how long it has been executing.
+	private int priority;		//The execution priority given to this process
 	private float tATime;		//turn around time: actual time to complete the job
-	private int waitTime;
-	private int quantum;
+	private float waitTime;		//The time this process spent waiting, (total time - arrival time) - execSize
+	private int quantum;		//Time slice given to this process in time switching algorithms like Round Robin.
 	
 	//default
 	public Process() {
 		this.id = "";
 		this.arrive = -1;
+		this.start = -1f;
+		this.finish = -1f;
 		this.execSize = -1;
 		this.execCount = -1;
 		this.priority = -1;
-		this.tATime = -1;
-		this.waitTime = -1;
+		this.tATime = -1f;
+		this.waitTime = -1f;
 		this.quantum = -1;
 	}
 	//constructor
@@ -32,9 +36,11 @@ public class Process {
 		this.arrive = newArrive;
 		this.execSize = newExecSize;
 		this.priority = newPriority;
+		this.start = 0f;
+		this.finish = 0f;
 		this.execCount = 0;
-		this.tATime = 0;
-		this.waitTime = 0;
+		this.tATime = 0f;
+		this.waitTime = 0f;
 		this.quantum = 0;
 	}
 	
@@ -48,7 +54,15 @@ public class Process {
 	public void setArrive(int newArrive) {
 		this.arrive = newArrive;
 	}
-	
+	//set the start time for this process
+	public void setStart(float newStart) {
+		this.start = newStart;
+	}
+	//set the finishing time for this process
+	public void setFinish(float newFinish) {
+		this.finish = newFinish;
+	}
+		
 	//Set the execution time/size of this process
 	public void setExecSize(int newExecSize) {
 		this.execSize = newExecSize;
@@ -68,7 +82,7 @@ public class Process {
 	}
 	
 	//Set the total time this process spent in a waiting queue
-	public void setWaitTime(int newWaitTime) {
+	public void setWaitTime(float newWaitTime) {
 		this.waitTime = newWaitTime;
 	}
 	
@@ -84,6 +98,12 @@ public class Process {
 	public int getArrive() {
 		return this.arrive;
 	}
+	public float getStart() {
+		return this.start;
+	}
+	public float getFinish() {
+		return this.finish;
+	}
 	public int getExecSize() {
 		return this.execSize;
 	}
@@ -96,7 +116,7 @@ public class Process {
 	public float getTATime() {
 		return this.tATime;
 	}
-	public int getWaitTime() {
+	public float getWaitTime() {
 		return this.waitTime;
 	}
 	public int getQuantum() {
