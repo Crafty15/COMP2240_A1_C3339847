@@ -52,9 +52,9 @@ public class ProcessList {
 	
 	//utility functions
 	//NOTE: This should take an input for the file name and return a process list object
-	public static ProcessList createProcessList() {
+	public static ProcessList createProcessList(String filePath) {
 		ProcessList resultPList = new ProcessList();
-		String input = FileUtils.readTextFile("datafile2.txt");
+		String input = FileUtils.readTextFile(filePath);
 		String[] blocks = input.split("END");
 		//Split the string into blocks that were separated by "END"
 		for(int i = 0; i < blocks.length; i++) {

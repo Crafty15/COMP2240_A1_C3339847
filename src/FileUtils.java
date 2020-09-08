@@ -45,7 +45,7 @@ public class FileUtils {
 			
 		}
 		catch(IOException e) {
-			System.out.println("IOException while reading text file: " + e.getMessage());
+			System.out.println("IOException while reading text file: " + e.getMessage() + "\n StackTrace: " + e.getStackTrace());
 		}
 		catch(Exception e){
 			System.out.println("Exception while reading text file: " + e.getMessage());

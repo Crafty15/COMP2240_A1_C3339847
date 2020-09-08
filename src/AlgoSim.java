@@ -14,7 +14,15 @@ public class AlgoSim {
 //		for(int i = 0; i < test.size(); i++) {
 //			System.out.println("test index " + i + "-" + test.get(i));
 //		}
-		ProcessList pl = ProcessList.createProcessList();
+		
+		if(args.length > 0) {
+			System.out.println("Filepath: " + args[0]);
+		}
+		else {
+			System.out.println("Please enter a file path as an argument and try again.");
+		}
+		
+		ProcessList pl = ProcessList.createProcessList(args[0]);
 		FCFS algo1 = new FCFS(pl);
 		algo1.run();
 		System.out.println(algo1.getEventLog());

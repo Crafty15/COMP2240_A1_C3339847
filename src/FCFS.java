@@ -34,13 +34,14 @@ public class FCFS extends Scheduler{
 			this.elapsedTime += this.dispTime;
 			//get the waiting process
 			this.running = getNext();
+			//set start time
 			this.running.setStart(this.elapsedTime);
 			//calc waiting time
 			this.running.setWaitTime(this.elapsedTime - this.running.getArrive());
 			//add this processes execTime to elapsed time
 			this.elapsedTime += this.running.getExecSize();
 			//calc this processes turn around time
-			this.running.setTATime(this.elapsedTime);
+			this.running.setTATime((this.elapsedTime - this.running.getStart()) + this.running.getWaitTime());
 			//calc finish time for this process
 			this.running.setFinish(this.elapsedTime);
 			super.done(this.running);
