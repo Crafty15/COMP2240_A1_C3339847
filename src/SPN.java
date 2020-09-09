@@ -1,4 +1,4 @@
-//File: FCFS.java
+//File: SPN.java
 //Purpose: Subclass of Scheduler. Simulates The Shortest Process Next scheduling algorithm.
 //			MORE INFO NEEDED	
 //Programmer: Liam Craft - c3339847
@@ -38,6 +38,12 @@ public class SPN extends Scheduler{
 	Process getNext() {
 		// TODO Auto-generated method stub
 		return null;
+	}
+
+	@Override
+	void checkArrivals(float time) {
+		// TODO Auto-generated method stub
+		
 	}
 
 }
