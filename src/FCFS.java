@@ -44,7 +44,7 @@ public class FCFS extends Scheduler{
 			this.running.setTATime((this.elapsedTime - this.running.getStart()) + this.running.getWaitTime());
 			//calc finish time for this process
 			this.running.setFinish(this.elapsedTime);
-			super.done(this.running);
+			this.done(this.running);
 			
 		}
 		while(readyQ.size() > 0);	
