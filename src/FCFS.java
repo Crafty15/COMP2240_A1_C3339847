@@ -12,13 +12,15 @@ public class FCFS extends Scheduler{
 	public FCFS() {
 		super.readyQ = new ArrayList<Process>();
 		super.finishedQ = new ArrayList<Process>();
+		super.incoming = new ArrayList<Process>();
 		super.running = new Process();
 		super.dispTime = 0;
 	}
 	//constructor
 	public FCFS(ProcessList newProcessList) {
-		super.readyQ = newProcessList.getPList();		//The jobs to be processed
+		super.incoming = newProcessList.getPList();		//The jobs to be processed
 		super.dispTime = newProcessList.getDispTime();	//Dispatcher time (To switch jobs)
+		super.readyQ = new ArrayList<Process>();		//
 		super.finishedQ = new ArrayList<Process>();		//Finished jobs
 		super.running = new Process();
 	}
@@ -29,6 +31,8 @@ public class FCFS extends Scheduler{
 	@Override
 	public void run() {
 		this.elapsedTime = 0;
+		//update the readyQueue (Do this after each elapsed time increment)
+		checkArrivals(this.elapsedTime);
 		do {
 			//add 1 disp time for switching in the process
 			this.elapsedTime += this.dispTime;
@@ -40,6 +44,8 @@ public class FCFS extends Scheduler{
 			this.running.setWaitTime(this.elapsedTime - this.running.getArrive());
 			//add this processes execTime to elapsed time
 			this.elapsedTime += this.running.getExecSize();
+			//update the readyQueue
+			checkArrivals(this.elapsedTime);
 			//calc this processes turn around time
 			this.running.setTATime((this.elapsedTime - this.running.getStart()) + this.running.getWaitTime());
 			//calc finish time for this process
@@ -67,28 +73,41 @@ public class FCFS extends Scheduler{
 		return next;
 	}
 	
+	//update the ready Queue
 	@Override
-	float calcAvgTurnaround() {		
-		if(this.finishedQ.isEmpty()) {
-			return 0;
-		}
-		else {
-			return this.elapsedTime/this.finishedQ.size();
-		}		
-	}
-	@Override
-	float calcAvgWait() {
-		if(this.finishedQ.isEmpty()) {
-			return 0;
-		}
-		else {
-			float totalWait = 0f;
-			for(int i = 0 ; i < finishedQ.size(); i++) {
-				totalWait += finishedQ.get(i).getWaitTime();
+	void checkArrivals(float time) {
+		// TODO Auto-generated method stub
+		for(int i = 0; i < this.incoming.size(); i++) {
+			Process p = this.incoming.get(i);
+			if(p.getArrive() <= time) {
+				this.readyQ.add(p);
+				this.incoming.remove(p);
 			}
-			return totalWait/this.finishedQ.size();
 		}
 	}
+	
+//	@Override
+//	float calcAvgTurnaround() {		
+//		if(this.finishedQ.isEmpty()) {
+//			return 0;
+//		}
+//		else {
+//			return this.elapsedTime/this.finishedQ.size();
+//		}		
+//	}
+//	@Override
+//	float calcAvgWait() {
+//		if(this.finishedQ.isEmpty()) {
+//			return 0;
+//		}
+//		else {
+//			float totalWait = 0f;
+//			for(int i = 0 ; i < finishedQ.size(); i++) {
+//				totalWait += finishedQ.get(i).getWaitTime();
+//			}
+//			return totalWait/this.finishedQ.size();
+//		}
+//	}
 	
 //	//get a formatted String representing the event log
 //	@Override

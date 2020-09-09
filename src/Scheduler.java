@@ -8,9 +8,10 @@ import java.util.ArrayList;
 public abstract class Scheduler {
 	float elapsedTime;				//Overall time, including scheduler switching
 	float avgTurnaround;			//Total turn around time / number of processes
-	float avgWait;					//total waiting time(for all processes together) / number of processes 
+	float avgWait;					//total waiting time(for all processes together) / number of processes
 	int dispTime;					//The unit of time required for a process switch.
-	ArrayList<Process> readyQ;		//Unprocessed jobs
+	ArrayList<Process> incoming;	//Processes that have not arrived
+	ArrayList<Process> readyQ;		//Arrived
 	Process running;				//current running job
 	ArrayList<Process> finishedQ;	//Processed jobs
 	
@@ -19,6 +20,9 @@ public abstract class Scheduler {
 	
 	//get the next process based on the rules of the algorithm
 	abstract Process getNext();
+	
+	//check arrivals at time intervals
+	abstract void checkArrivals(float time);
 	
 	//remove a finished process from the ready queue
 	void done(Process p) {
