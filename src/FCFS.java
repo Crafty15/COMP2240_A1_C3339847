@@ -35,7 +35,7 @@ public class FCFS extends Scheduler{
 		checkArrivals(this.elapsedTime);
 		do {
 			//add 1 disp time for switching in the process
-			this.elapsedTime += this.dispTime;
+			dispSwitch();
 			//get the waiting process
 			this.running = getNext();
 			//set start time
@@ -72,64 +72,29 @@ public class FCFS extends Scheduler{
 		}
 		return next;
 	}
+
 	
-	//update the ready Queue
+	//get a formatted String representing the event log
 	@Override
-	void checkArrivals(float time) {
-		// TODO Auto-generated method stub
-		for(int i = 0; i < this.incoming.size(); i++) {
-			Process p = this.incoming.get(i);
-			if(p.getArrive() <= time) {
-				this.readyQ.add(p);
-				this.incoming.remove(p);
+	String getEventLog() {
+		String output = "FCFS:\n";
+		//TODO: Output an event log
+		if(this.finishedQ.isEmpty()) {
+			output += "Error: No processes have been logged.";
+		}
+		else {
+			for(int i = 0; i < this.finishedQ.size(); i++) {
+				Process p = this.finishedQ.get(i);
+				output += "T" + p.getStart() + ": " + p.getId() + "(" + p.getPriority() + ")\n";
+			}
+			output += "Process|Turnaround Time|Waiting Time\n";
+			for(int i = 0; i < finishedQ.size(); i++) {
+				Process p = this.finishedQ.get(i);
+				output += p.getId() + "\t" + p.getTATime() + "\t\t" + p.getWaitTime() + "\n";
 			}
 		}
+		return output;
 	}
-	
-//	@Override
-//	float calcAvgTurnaround() {		
-//		if(this.finishedQ.isEmpty()) {
-//			return 0;
-//		}
-//		else {
-//			return this.elapsedTime/this.finishedQ.size();
-//		}		
-//	}
-//	@Override
-//	float calcAvgWait() {
-//		if(this.finishedQ.isEmpty()) {
-//			return 0;
-//		}
-//		else {
-//			float totalWait = 0f;
-//			for(int i = 0 ; i < finishedQ.size(); i++) {
-//				totalWait += finishedQ.get(i).getWaitTime();
-//			}
-//			return totalWait/this.finishedQ.size();
-//		}
-//	}
-	
-//	//get a formatted String representing the event log
-//	@Override
-//	String getEventLog() {
-//		String output = "FCFS:\n";
-//		//TODO: Output an event log
-//		if(this.finishedQ.isEmpty()) {
-//			output += "Error: No processes have been logged.";
-//		}
-//		else {
-//			for(int i = 0; i < this.finishedQ.size(); i++) {
-//				Process p = this.finishedQ.get(i);
-//				output += "T" + p.getStart() + ": " + p.getId() + "(" + p.getPriority() + ")\n";
-//			}
-//			output += "Process|Turnaround Time|Waiting Time\n";
-//			for(int i = 0; i < finishedQ.size(); i++) {
-//				Process p = this.finishedQ.get(i);
-//				output += p.getId() + "\t" + p.getTATime() + "\t\t" + p.getWaitTime() + "\n";
-//			}
-//		}
-//		return output;
-//	}
 
 
 	

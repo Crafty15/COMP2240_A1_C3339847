@@ -21,8 +21,30 @@ public abstract class Scheduler {
 	//get the next process based on the rules of the algorithm
 	abstract Process getNext();
 	
+	abstract String getEventLog();
+	
 	//check arrivals at time intervals
-	abstract void checkArrivals(float time);
+	void checkArrivals(float time) {
+		int count = this.incoming.size();
+		for(int i = 0; i < count; i++) {
+			Process p = this.incoming.get(i);
+			if(p.getArrive() <= time) {
+				this.readyQ.add(p);
+				//this.incoming.remove(p);
+			}
+		}
+		//iterate over incomingQ to remove ready processes
+		for(int i = 0; i < this.readyQ.size(); i++) {
+			Process pR = this.readyQ.get(i);
+			for(int j = 0; j < this.incoming.size(); j++) {
+				Process pI = this.incoming.get(j); 
+				if(pR.equals(pI)) {
+					this.incoming.remove(pR);
+				}
+			}
+			
+		}
+	}
 	
 	//remove a finished process from the ready queue
 	void done(Process p) {
@@ -53,26 +75,20 @@ public abstract class Scheduler {
 		}
 	}
 	
-	//get a formatted String representing the event log
-	String getEventLog() {
-		String output = "FCFS:\n";
-		//TODO: Output an event log
-		if(this.finishedQ.isEmpty()) {
-			output += "Error: No processes have been logged.";
-		}
-		else {
-			for(int i = 0; i < this.finishedQ.size(); i++) {
-				Process p = this.finishedQ.get(i);
-				output += "T" + p.getStart() + ": " + p.getId() + "(" + p.getPriority() + ")\n";
-			}
-			output += "Process|Turnaround Time|Waiting Time\n";
-			for(int i = 0; i < finishedQ.size(); i++) {
-				Process p = this.finishedQ.get(i);
-				output += p.getId() + "\t" + p.getTATime() + "\t\t" + p.getWaitTime() + "\n";
-			}
-		}
-		return output;
+//	public void sort() {
+//		
+//	}
+	
+	//simulated clock tick (only needed interrupts)
+	public void tick() {
+		this.elapsedTime++;
 	}
+	//switch a process
+	public void dispSwitch() {
+		this.elapsedTime += this.dispTime;
+	}
+	
+
 
 
 }
