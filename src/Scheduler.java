@@ -88,6 +88,22 @@ public abstract class Scheduler {
 		this.elapsedTime += this.dispTime;
 	}
 	
+	//check for an interrupting process, return true if there is an arrived process waiting that has higher priority
+	public boolean checkInterrupts() {
+		for(int i = 0; i < this.readyQ.size(); i++) {
+			if(readyQ.get(i).getPriority() < this.running.getPriority()) {
+				return true;
+			}
+		}
+		return false;
+	}
+
+	//increment waiting time for arrived processes
+	public void incAllWaitTimes() {
+		for(int i = 0; i < this.readyQ.size(); i++) {
+			this.readyQ.get(i).incWaitTime();
+		}
+	}
 
 
 

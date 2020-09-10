@@ -22,10 +22,12 @@ public class AlgoSim {
 			System.out.println("Please enter a file path as an argument and try again.");
 		}
 		
-		//Test the FCFS
+		
 		String cmdArgs = args[0];
 		ProcessList pL1 = ProcessList.createProcessList(cmdArgs);
 		ProcessList pL2 = ProcessList.createProcessList(cmdArgs);
+		ProcessList pL3 = ProcessList.createProcessList(cmdArgs);
+		// FCFS
 		FCFS algo1 = new FCFS(pL1);
 		algo1.run();
 		System.out.println(algo1.getEventLog());
@@ -34,6 +36,11 @@ public class AlgoSim {
 		SPN algo2 = new SPN(pL2);
 		algo2.run();
 		System.out.println(algo2.getEventLog());
+		//PP
+		PP algo3 = new PP(pL3);
+		algo3.run();
+		//System.out.println("TEST");
+		System.out.println(algo3.getEventLog());
 		
 		
 		System.out.println("Done. Nice.");

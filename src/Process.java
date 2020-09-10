@@ -20,15 +20,15 @@ public class Process {
 	//default
 	public Process() {
 		this.id = "";
-		this.arrive = -1;
-		this.start = -1f;
-		this.finish = -1f;
-		this.execSize = -1;
-		this.execCount = -1;
-		this.priority = -1;
-		this.tATime = -1f;
-		this.waitTime = -1f;
-		this.quantum = -1;
+		this.arrive = 0;
+		this.start = 0;
+		this.finish = 0;
+		this.execSize = 0;
+		this.execCount = 0;
+		this.priority = 0;
+		this.tATime = 0;
+		this.waitTime = 0;
+		this.quantum = 0;
 	}
 	//constructor
 	public Process(String newId, int newArrive, int newExecSize, int newPriority) {
@@ -89,6 +89,14 @@ public class Process {
 	//Set the time slice for this process when in RR style algorithms
 	public void setQuantum(int newQuantum) {
 		this.quantum = newQuantum;
+	}
+	//inc the execution counter
+	public void incExecCount() {
+		this.execCount++;
+	}
+	//inc the waiting time
+	public void incWaitTime() {
+		this.waitTime++;
 	}
 	
 	//getters
