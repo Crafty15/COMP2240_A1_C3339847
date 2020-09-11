@@ -29,8 +29,31 @@ public class PRR extends Scheduler{
 	
 	
 	@Override
+	//NOTE: UPTO HERE! Not working properly
 	void run() {
-		
+		this.elapsedTime = 0;
+		checkArrivals(this.elapsedTime);
+		do {
+			dispSwitch();
+			this.running = getNext();
+			this.running.setStart(this.elapsedTime);
+			this.log += "T" + this.elapsedTime + ": " + this.running.getId() + "(" + this.running.getPriority() + ")\n";
+			//work on the current process for the length of it's time quantum
+			while(this.running.getExecCount() <= this.running.getQuantum()) {
+				tick();
+				this.running.incExecCount();			
+			}
+			if(this.running.getExecCount() == this.running.getExecSize()) {
+				this.running.setFinish(this.elapsedTime);
+				this.running.setTATime(this.running.getFinish() - this.running.getArrive());
+				this.running.setWaitTime(this.running.getTATime() - this.running.getExecSize());
+				this.done(this.running);
+			}
+			else {
+				this.readyQ.add(this.running);
+			}
+		}
+		while(readyQ.size() > 0);
 	}
 	
 	//Get the next process from the readyQ based on priority
@@ -46,6 +69,15 @@ public class PRR extends Scheduler{
 			}
 		}
 		this.readyQ.remove(next);
+		//set the time quantum here? For now.
+		if(next.getQuantum() == 0) {
+			if(next.getPriority() <= 3) {
+				next.setQuantum(2);
+			}
+			else {
+				next.setQuantum(4);
+			}	
+		}
 		return next;
 	}
 
