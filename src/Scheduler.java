@@ -99,11 +99,11 @@ public abstract class Scheduler {
 	}
 
 	//increment waiting time for arrived processes
-	public void incAllWaitTimes() {
-		for(int i = 0; i < this.readyQ.size(); i++) {
-			this.readyQ.get(i).incWaitTime();
-		}
-	}
+//	public void incAllWaitTimes() {
+//		for(int i = 0; i < this.readyQ.size(); i++) {
+//			this.readyQ.get(i).incWaitTime();
+//		}
+//	}
 
 
 

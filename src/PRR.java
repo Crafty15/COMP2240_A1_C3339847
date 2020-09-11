@@ -6,15 +6,10 @@
 
 import java.util.ArrayList;
 import java.util.Collections;
-
-public class PP extends Scheduler{
-	//Class specific variables
-	//ArrayList<Process> waitQ;
-	//event log
+public class PRR extends Scheduler{
 	String log;
-	
 	//default
-	public PP() {
+	public PRR() {
 		super.readyQ = new ArrayList<Process>();
 		super.finishedQ = new ArrayList<Process>();
 		super.incoming = new ArrayList<Process>();
@@ -23,7 +18,7 @@ public class PP extends Scheduler{
 		this.log = "";
 	}
 	//constructor
-	public PP(ProcessList newProcessList) {
+	public PRR(ProcessList newProcessList) {
 		super.readyQ = new ArrayList<Process>();		//The jobs to be processed
 		super.dispTime = newProcessList.getDispTime();	//Dispatcher time (To switch jobs)
 		super.incoming = newProcessList.getPList();		//The jobs to be processed
@@ -32,47 +27,13 @@ public class PP extends Scheduler{
 		this.log = "";
 	}
 	
+	
 	@Override
 	void run() {
-		this.elapsedTime = 0;
-		checkArrivals(this.elapsedTime);
-		do{
-			//disp time for switching in process
-			dispSwitch();
-			this.running = getNext();
-			this.running.setStart(this.elapsedTime);
-			this.log += "T" + this.elapsedTime + ": " + this.running.getId() + "(" + this.running.getPriority() + ")\n";
-			//work on the current process until there is an interrupt (check for interupts on each tick, i guess :/)
-			while(this.running.getExecCount() < this.running.getExecSize()) {
-				//this.log += "T" + this.elapsedTime + ": " + this.running.getId() + "(" + this.running.getPriority() + ")\n";
-				tick();
-				//increment the execution count with each tick
-				this.running.incExecCount();
-				//check for arrivals with each tick
-				checkArrivals(this.elapsedTime);
-				//NOTE: waiting time is turnaround time - execSize
-				//check for an interrupt
-				if(checkInterrupts()) {
-					this.readyQ.add(this.running);
-					this.running = getNext();
-					this.running.setStart(this.elapsedTime);
-					dispSwitch();
-					this.log += "T" + this.elapsedTime + ": " + this.running.getId() + "(" + this.running.getPriority() + ")\n";
-				}
-
-			}
-			this.running.setFinish(this.elapsedTime);
-			this.running.setTATime(this.running.getFinish() - this.running.getArrive());
-			this.running.setWaitTime(this.running.getTATime() - this.running.getExecSize());
-			this.done(this.running);
-		}
-		while(readyQ.size() > 0);
-		
 		
 	}
-
 	
-	//get the next process from the readyQ based on priority (Lower number = higher priority)
+	//Get the next process from the readyQ based on priority
 	@Override
 	Process getNext() {
 		Process next = readyQ.get(0);
@@ -90,7 +51,7 @@ public class PP extends Scheduler{
 
 	@Override
 	String getEventLog() {
-		String output = "PP:\n";
+		String output = "PRR:\n";
 		//sort the Process List
 		//NOTE:**********SORTING NOT WORKING!!!!***********
 		Collections.sort(this.finishedQ , new NameSort());
