@@ -6,23 +6,29 @@
 import java.util.ArrayList;
 
 public class ProcessList {
-	private int dispTime;				//dispatch time
+	private int dispTime;				//Dispatcher running time
 	private ArrayList<Process> pList;	//List of processes
 	
 	
-	//default
+	//ProcessList default constructor 
+	//Precondition: None
+	//Postconditions: A ProcessList object has been created with default values
 	public ProcessList() {
 		dispTime = -1;
 		pList = new ArrayList<Process>();
 	}
 	
-	//constructor 1
+	//constructor 1 - takes only a dispatcher time and creates a default Process list
+	//Precondition: None
+	//Postconditions: A ProcessList object has been created with given dispatcher time and a default Process list
 	public ProcessList(int newDispTime) {
 		this.dispTime = newDispTime;
 		pList = new ArrayList<Process>();
 	}
 	
-	//constructor 2
+	//constructor 2 - Takes a dispatcher time and Process arraylist
+	//Precondition: None
+	//Postconditions: A ProcessList object  has been created with the given values
 	public ProcessList(int newDispTime, ArrayList<Process> newPList) {
 		this.dispTime = newDispTime;
 		this.pList = newPList;
@@ -51,7 +57,9 @@ public class ProcessList {
 	}
 	
 	//utility functions
-	//NOTE: This should take an input for the file name and return a process list object
+	//createProcessList() - Utilises the FileUtils class to get string input from a file and sort the data into process objects.
+	//Precondition: None
+	//Postconditions: A ProcessList object has been returned that has values from the given text file.
 	public static ProcessList createProcessList(String filePath) {
 		ProcessList resultPList = new ProcessList();
 		String input = FileUtils.readTextFile(filePath);
@@ -75,7 +83,7 @@ public class ProcessList {
 					else {
 						switch(vals[0]) {	
 						case "ID":		
-										p.setId(vals[1]);//add to ID for process object
+										p.setId(vals[1].trim());//add to ID for process object
 										break;
 										
 						case "Arrive":	

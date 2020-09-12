@@ -4,33 +4,27 @@
 //Programmer: Liam Craft - c3339847
 //Date: 09/09/2020
 
-import java.util.ArrayList;
 import java.util.Collections;
 
 public class SPN extends Scheduler{
-	//variables specific to this class
-	//ArrayList<Process> waitQ;
 	
-	//default
+	//SPN default constructor
+	//Precondition: None
+	//Postconditions: A default SPN object has been created
 	public SPN() {
-		super.readyQ = new ArrayList<Process>();
-		super.finishedQ = new ArrayList<Process>();
-		super.incoming = new ArrayList<Process>();
-		super.running = new Process();
-		super.dispTime = 0;
-		//this.waitQ = new ArrayList<Process>();
+		super();
 	}
 	
-	//constructor
+	//SPN constructor
+	//Precondition: None
+	//Postconditions: An SPN object has been created with the given ProcessList
 	public SPN(ProcessList newProcessList) {
-		super.readyQ = new ArrayList<Process>();		//The jobs to be processed
-		super.dispTime = newProcessList.getDispTime();	//Dispatcher time (To switch jobs)
-		super.incoming = newProcessList.getPList();		//The jobs to be processed
-		super.finishedQ = new ArrayList<Process>();		//Finished jobs
-		super.running = new Process();
-		//this.waitQ = new ArrayList<Process>();
+		super(newProcessList);
 	}
-	
+
+	//runs the simulated SPN algorithm
+	//Precondition: An SPN object has been created
+	//Postconditions: 
 	@Override
 	void run() {
 		this.elapsedTime = 0;
@@ -60,7 +54,9 @@ public class SPN extends Scheduler{
 	}
 	
 	//get the next process. Based on the process in the readyQueue
-	//that has the shortest processing time (NOTE: the readyQ takes care of arrivals)
+	//that has the shortest processing time. The readyQ takes care of arrivals.
+	//Precondition: 
+	//Postconditions:	
 	@Override
 	Process getNext() {
 		Process next = readyQ.get(0);
@@ -72,7 +68,10 @@ public class SPN extends Scheduler{
 		}
 		return next;
 	}
-	//get a formatted String representing the event log
+	
+	//Get a formatted String representing the event log
+	//Precondition: 
+	//Postconditions:	
 	String getEventLog() {
 		String output = "SPN:\n";
 		//sort the Process List
@@ -86,7 +85,7 @@ public class SPN extends Scheduler{
 				Process p = this.finishedQ.get(i);
 				output += "T" + p.getStart() + ": " + p.getId() + "(" + p.getPriority() + ")\n";
 			}
-			output += "Process|Turnaround Time|Waiting Time\n";
+			output += "\nProcess|Turnaround Time|Waiting Time\n";
 			for(int i = 0; i < finishedQ.size(); i++) {
 				Process p = this.finishedQ.get(i);
 				output += p.getId() + "\t" + p.getTATime() + "\t\t" + p.getWaitTime() + "\n";

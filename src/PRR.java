@@ -4,95 +4,112 @@
 //Programmer: Liam Craft - c3339847
 //Date: 09/09/2020
 
-import java.util.ArrayList;
 import java.util.Collections;
 public class PRR extends Scheduler{
-	String log;
-	//default
+	//class specific variables
+	String log;						//for logging process arrival times
+	
+	//PRR default constructor
+	//Precondition: None
+	//Postconditions:
 	public PRR() {
-		super.readyQ = new ArrayList<Process>();
-		super.finishedQ = new ArrayList<Process>();
-		super.incoming = new ArrayList<Process>();
-		super.running = new Process();
-		super.dispTime = 0;
+		super();
 		this.log = "";
 	}
-	//constructor
+	
+	//PRR constructor
+	//Precondition: None
+	//Postconditions:
 	public PRR(ProcessList newProcessList) {
-		super.readyQ = new ArrayList<Process>();		//The jobs to be processed
-		super.dispTime = newProcessList.getDispTime();	//Dispatcher time (To switch jobs)
-		super.incoming = newProcessList.getPList();		//The jobs to be processed
-		super.finishedQ = new ArrayList<Process>();		//Finished jobs
-		super.running = new Process();
+		super(newProcessList);
 		this.log = "";
 	}
 	
-	
+	//runs the simulated PRR algorithm
+	//Precondition: 
+	//Postconditions:	
 	@Override
-	//NOTE: UPTO HERE! Not working properly
 	void run() {
 		this.elapsedTime = 0;
-		checkArrivals(this.elapsedTime);
 		do {
+			checkArrivals(this.elapsedTime);
 			dispSwitch();
 			this.running = getNext();
-			this.running.setStart(this.elapsedTime);
-			this.log += "T" + this.elapsedTime + ": " + this.running.getId() + "(" + this.running.getPriority() + ")\n";
-			//work on the current process for the length of it's time quantum
-			while(this.running.getExecCount() <= this.running.getQuantum()) {
-				tick();
-				this.running.incExecCount();			
+			//set time quantum
+			if(this.running.getPriority() < 3) {
+				this.running.setQuantum(4);
 			}
-			if(this.running.getExecCount() == this.running.getExecSize()) {
+			else {
+				this.running.setQuantum(2);
+			}
+			this.log += "T" + this.elapsedTime + ": " + this.running.getId() + "(" + this.running.getPriority() + ")\n";
+			//count size is the size or the assigned time quantum OR the execution size. Which ever is smallest
+			int count;
+			//Log arrival time and set the start time if it hasn't already been started
+			if(this.running.getStart() <= 0) {
+				this.running.setStart(this.elapsedTime);
+				//this.log += "T" + this.elapsedTime + ": " + this.running.getId() + "(" + this.running.getPriority() + ")\n";
+			}
+			//if the quantum is greater than execution size - use just the execution size
+			if(this.running.getQuantum() > this.running.getExecSize()) {
+				count = this.running.getExecSize();
+			}
+			//if the quantum is greater than the remaining execution size - use the remaining execution size
+			else if(this.running.getQuantum() > this.running.getExecSize() - this.running.getExecCount()) {
+				count = this.running.getExecSize() - this.running.getExecCount();
+			}
+			//quantum is the smallest
+			else {
+				count = this.running.getQuantum();
+			}
+			//work on the current process for the length of it's time quantum or process time, whichever is less.
+			for(int i = 0; i < count; i++) {
+				//inc time
+				tick();
+				this.running.incExecCount();
+			}
+			//check for new processes
+			checkArrivals(this.elapsedTime);
+			//move to the finishedQ if done
+			if(this.running.getExecCount() == this.running.getExecSize()) {			
+				//set the end stuff
 				this.running.setFinish(this.elapsedTime);
 				this.running.setTATime(this.running.getFinish() - this.running.getArrive());
 				this.running.setWaitTime(this.running.getTATime() - this.running.getExecSize());
-				this.done(this.running);
+				super.done(this.running);
 			}
-			else {
+			else {				
 				this.readyQ.add(this.running);
+				//checkArrivals(this.elapsedTime);
 			}
+			
 		}
 		while(readyQ.size() > 0);
 	}
 	
-	//Get the next process from the readyQ based on priority
+	//Get the next process from the readyQ OR the waitQ based on arrival, if arrivals are same, just go by natural list order.
+	//Precondition: 
+	//Postconditions:
 	@Override
-	Process getNext() {
-		Process next = readyQ.get(0);
-		Process temp = new Process();
-		//check the readyQ
-		for(int i = 1; i < readyQ.size(); i++) {
-			temp = readyQ.get(i);
-			if(next.getPriority() > temp.getPriority()) {
-				next = temp;
-			}
-		}
-		this.readyQ.remove(next);
-		//set the time quantum here? For now.
-		if(next.getQuantum() == 0) {
-			if(next.getPriority() <= 3) {
-				next.setQuantum(2);
-			}
-			else {
-				next.setQuantum(4);
-			}	
-		}
+	Process getNext() {	
+		Process next = this.readyQ.remove(0);
 		return next;
 	}
 
+	//Get a formatted String representing the event log
+	//Precondition: 
+	//Postconditions:	
 	@Override
 	String getEventLog() {
 		String output = "PRR:\n";
 		//sort the Process List
-		//NOTE:**********SORTING NOT WORKING!!!!***********
 		Collections.sort(this.finishedQ , new NameSort());
 		if(this.finishedQ.isEmpty()) {
 			output += "Error: No processes have been logged.";
 		}
 		else {
 			output += this.log;
-			output += "Process|Turnaround Time|Waiting Time\n";
+			output += "\nProcess|Turnaround Time|Waiting Time\n";
 			for(int i = 0; i < finishedQ.size(); i++) {
 				Process p = this.finishedQ.get(i);
 				output += p.getId() + "\t" + p.getTATime() + "\t\t" + p.getWaitTime() + "\n";

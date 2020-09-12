@@ -1,33 +1,26 @@
 //File: FCFS.java
 //Purpose: Subclass of Scheduler. Simulates The First Come First Served scheduling algorithm.
-//			MORE INFO NEEDED	
 //Programmer: Liam Craft - c3339847
 //Date: 06/09/2020
 
-import java.util.ArrayList;
-
 public class FCFS extends Scheduler{
 	
-	//default
+	//FCFS default constructor
+	//Precondition: None
+	//Postconditions:
 	public FCFS() {
-		super.readyQ = new ArrayList<Process>();
-		super.finishedQ = new ArrayList<Process>();
-		super.incoming = new ArrayList<Process>();
-		super.running = new Process();
-		super.dispTime = 0;
+		super();
 	}
-	//constructor
+	//FCFS constructor
+	//Precondition: None
+	//Postconditions:
 	public FCFS(ProcessList newProcessList) {
-		super.incoming = newProcessList.getPList();		//The jobs to be processed
-		super.dispTime = newProcessList.getDispTime();	//Dispatcher time (To switch jobs)
-		super.readyQ = new ArrayList<Process>();		//
-		super.finishedQ = new ArrayList<Process>();		//Finished jobs
-		super.running = new Process();
+		super(newProcessList);
 	}
 	
-	//NOTE: FCFS ignores priority and only cares about arrival time. 
-	//NOTE: What to do when all arrival times are the same?
-	
+	//Runs the simulated FCFS algorithm
+	//Precondition: 
+	//Postconditions:
 	@Override
 	public void run() {
 		this.elapsedTime = 0;
@@ -57,8 +50,9 @@ public class FCFS extends Scheduler{
 		
 	}
 	
-	//get the next process based on the time it arrived
-	//NOTE: What to do when all arrival times are the same?
+	//Get the next process based on the time it arrived
+	//Precondition: 
+	//Postconditions:
 	@Override
 	Process getNext() {
 		//get the first item off the list
@@ -74,11 +68,12 @@ public class FCFS extends Scheduler{
 	}
 
 	
-	//get a formatted String representing the event log
+	//Get a formatted String representing the event log
+	//Precondition: 
+	//Postconditions:
 	@Override
 	String getEventLog() {
 		String output = "FCFS:\n";
-		//TODO: Output an event log
 		if(this.finishedQ.isEmpty()) {
 			output += "Error: No processes have been logged.";
 		}
@@ -87,7 +82,7 @@ public class FCFS extends Scheduler{
 				Process p = this.finishedQ.get(i);
 				output += "T" + p.getStart() + ": " + p.getId() + "(" + p.getPriority() + ")\n";
 			}
-			output += "Process|Turnaround Time|Waiting Time\n";
+			output += "\nProcess|Turnaround Time|Waiting Time\n";
 			for(int i = 0; i < finishedQ.size(); i++) {
 				Process p = this.finishedQ.get(i);
 				output += p.getId() + "\t" + p.getTATime() + "\t\t" + p.getWaitTime() + "\n";

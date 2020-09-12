@@ -1,37 +1,33 @@
 //File: PP.java
-//Purpose: Subclass of Scheduler. Simulates The Premptive Priority scheduling algorithm.
-//			MORE INFO NEEDED	
+//Purpose: Subclass of Scheduler. Simulates The Premptive Priority scheduling algorithm.	
 //Programmer: Liam Craft - c3339847
 //Date: 09/09/2020
 
-import java.util.ArrayList;
 import java.util.Collections;
 
 public class PP extends Scheduler{
 	//Class specific variables
-	//ArrayList<Process> waitQ;
-	//event log
-	String log;
+	String log;						//for logging process arrival times
 	
-	//default
+	//PP default constructor
+	//Precondition: None
+	//Postconditions:
 	public PP() {
-		super.readyQ = new ArrayList<Process>();
-		super.finishedQ = new ArrayList<Process>();
-		super.incoming = new ArrayList<Process>();
-		super.running = new Process();
-		super.dispTime = 0;
-		this.log = "";
-	}
-	//constructor
-	public PP(ProcessList newProcessList) {
-		super.readyQ = new ArrayList<Process>();		//The jobs to be processed
-		super.dispTime = newProcessList.getDispTime();	//Dispatcher time (To switch jobs)
-		super.incoming = newProcessList.getPList();		//The jobs to be processed
-		super.finishedQ = new ArrayList<Process>();		//Finished jobs
-		super.running = new Process();
+		super();
 		this.log = "";
 	}
 	
+	//PP constructor
+	//Precondition: None
+	//Postconditions:
+	public PP(ProcessList newProcessList) {
+		super(newProcessList);
+		this.log = "";
+	}
+	
+	//runs the simulated PP algorithm
+	//Precondition: 
+	//Postconditions:	
 	@Override
 	void run() {
 		this.elapsedTime = 0;
@@ -70,9 +66,10 @@ public class PP extends Scheduler{
 		
 		
 	}
-
 	
-	//get the next process from the readyQ based on priority (Lower number = higher priority)
+	//Get the next process from the readyQ based on priority (Lower number = higher priority)
+	//Precondition: 
+	//Postconditions:
 	@Override
 	Process getNext() {
 		Process next = readyQ.get(0);
@@ -80,6 +77,7 @@ public class PP extends Scheduler{
 		//check the readyQ
 		for(int i = 1; i < readyQ.size(); i++) {
 			temp = readyQ.get(i);
+			//NOTE:Check this priority when the output is sorted
 			if(next.getPriority() > temp.getPriority()) {
 				next = temp;
 			}
@@ -87,7 +85,10 @@ public class PP extends Scheduler{
 		this.readyQ.remove(next);
 		return next;
 	}
-
+	
+	//Get a formatted String representing the event log
+	//Precondition: 
+	//Postconditions:
 	@Override
 	String getEventLog() {
 		String output = "PP:\n";
@@ -99,7 +100,7 @@ public class PP extends Scheduler{
 		}
 		else {
 			output += this.log;
-			output += "Process|Turnaround Time|Waiting Time\n";
+			output += "\nProcess|Turnaround Time|Waiting Time\n";
 			for(int i = 0; i < finishedQ.size(); i++) {
 				Process p = this.finishedQ.get(i);
 				output += p.getId() + "\t" + p.getTATime() + "\t\t" + p.getWaitTime() + "\n";

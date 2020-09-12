@@ -11,8 +11,10 @@ import java.util.*;
 
 public class FileUtils {
 	
-	//reads the text file in individual lines. 
+	//Reads the text file in individual lines. 
 	//takes file name as an argument, returns each line as an element in the arraylist.
+	//Precondition: None
+	//Postconditions: An ArrayList representing the text file has been returned
 	public static ArrayList<String> readTextFileByLine(String fileName) {
 		ArrayList<String> result = new ArrayList<String>();
 		try {
@@ -36,7 +38,9 @@ public class FileUtils {
 		return result;
 	}
 	
-//	//read the text file as one string. Should make it easier to sort into objects
+	//Reads the text file as one string.
+	//Precondition: None
+	//Postconditions: A String representing the text file has been returned
 	public static String readTextFile(String fileName) {
 		String result = null;
 		Path path = Paths.get(fileName);
