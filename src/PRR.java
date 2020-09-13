@@ -31,11 +31,12 @@ public class PRR extends Scheduler{
 	@Override
 	void run() {
 		this.elapsedTime = 0;
+		dispSwitch();
 		do {
 			checkArrivals(this.elapsedTime);
-			dispSwitch();
+			//dispSwitch();
 			this.running = getNext();
-			//set time quantum
+		    //set time quantum
 			if(this.running.getPriority() < 3) {
 				this.running.setQuantum(4);
 			}
@@ -77,12 +78,18 @@ public class PRR extends Scheduler{
 				this.running.setTATime(this.running.getFinish() - this.running.getArrive());
 				this.running.setWaitTime(this.running.getTATime() - this.running.getExecSize());
 				super.done(this.running);
+				//moved from top
+				dispSwitch();
+			}
+			else if(this.readyQ.isEmpty()) {
+				//Last minute fix to account for a continuing process (No switch if there is nothing waiting)
+				break;
 			}
 			else {				
 				this.readyQ.add(this.running);
-				//checkArrivals(this.elapsedTime);
-			}
-			
+				//moved from top
+				dispSwitch();
+			}			
 		}
 		while(readyQ.size() > 0);
 	}

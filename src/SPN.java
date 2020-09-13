@@ -4,7 +4,6 @@
 //Programmer: Liam Craft - c3339847
 //Date: 09/09/2020
 
-import java.util.Collections;
 
 public class SPN extends Scheduler{
 	
@@ -75,8 +74,6 @@ public class SPN extends Scheduler{
 	String getEventLog() {
 		String output = "SPN:\n";
 		//sort the Process List
-		//NOTE:**********SORTING NOT WORKING!!!!**************
-		Collections.sort(this.finishedQ , new NameSort());
 		if(this.finishedQ.isEmpty()) {
 			output += "Error: No processes have been logged.";
 		}
