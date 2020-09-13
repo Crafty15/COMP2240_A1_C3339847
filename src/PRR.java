@@ -11,7 +11,7 @@ public class PRR extends Scheduler{
 	
 	//PRR default constructor
 	//Precondition: None
-	//Postconditions:
+	//Postconditions: A PRR object has been created with default values
 	public PRR() {
 		super();
 		this.log = "";
@@ -19,15 +19,15 @@ public class PRR extends Scheduler{
 	
 	//PRR constructor
 	//Precondition: None
-	//Postconditions:
+	//Postconditions: A PRR object has been created with the given ProcessList
 	public PRR(ProcessList newProcessList) {
 		super(newProcessList);
 		this.log = "";
 	}
 	
 	//runs the simulated PRR algorithm
-	//Precondition: 
-	//Postconditions:	
+	//Precondition: A PRR object has been created
+	//Postconditions: The process objects have been updated with the simulated running data
 	@Override
 	void run() {
 		this.elapsedTime = 0;
@@ -88,8 +88,8 @@ public class PRR extends Scheduler{
 	}
 	
 	//Get the next process from the readyQ OR the waitQ based on arrival, if arrivals are same, just go by natural list order.
-	//Precondition: 
-	//Postconditions:
+	//Precondition: A PRR object has been created
+	//Postconditions: The process that arrived most recently has been returned and removed from the readyQ
 	@Override
 	Process getNext() {	
 		Process next = this.readyQ.remove(0);
@@ -97,8 +97,8 @@ public class PRR extends Scheduler{
 	}
 
 	//Get a formatted String representing the event log
-	//Precondition: 
-	//Postconditions:	
+	//Precondition: A PRR object has been created
+	//Postconditions: A String representation of the simulated algorithm stats has been returned
 	@Override
 	String getEventLog() {
 		String output = "PRR:\n";

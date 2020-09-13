@@ -7,20 +7,20 @@ public class FCFS extends Scheduler{
 	
 	//FCFS default constructor
 	//Precondition: None
-	//Postconditions:
+	//Postconditions: A default FCFS object has been created
 	public FCFS() {
 		super();
 	}
 	//FCFS constructor
 	//Precondition: None
-	//Postconditions:
+	//Postconditions: An FCFS object has been created using the given ProcessList
 	public FCFS(ProcessList newProcessList) {
 		super(newProcessList);
 	}
 	
 	//Runs the simulated FCFS algorithm
-	//Precondition: 
-	//Postconditions:
+	//Precondition: An FCFS object has been created
+	//Postconditions: The process objects have been updated with their simulated algorithm run data
 	@Override
 	public void run() {
 		this.elapsedTime = 0;
@@ -51,8 +51,8 @@ public class FCFS extends Scheduler{
 	}
 	
 	//Get the next process based on the time it arrived
-	//Precondition: 
-	//Postconditions:
+	//Precondition: An FCFS object has been created
+	//Postconditions: The next waiting process object has been returned
 	@Override
 	Process getNext() {
 		//get the first item off the list
@@ -69,8 +69,8 @@ public class FCFS extends Scheduler{
 
 	
 	//Get a formatted String representing the event log
-	//Precondition: 
-	//Postconditions:
+	//Precondition: An FCFS object has been created
+	//Postconditions: An String representation of the FCFS algorithms running values has been returned
 	@Override
 	String getEventLog() {
 		String output = "FCFS:\n";

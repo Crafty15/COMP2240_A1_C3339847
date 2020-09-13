@@ -11,7 +11,7 @@ public class PP extends Scheduler{
 	
 	//PP default constructor
 	//Precondition: None
-	//Postconditions:
+	//Postconditions: A PP algorithm object has been created with the default values
 	public PP() {
 		super();
 		this.log = "";
@@ -19,15 +19,15 @@ public class PP extends Scheduler{
 	
 	//PP constructor
 	//Precondition: None
-	//Postconditions:
+	//Postconditions: A PP object has been created using the given ProcessList
 	public PP(ProcessList newProcessList) {
 		super(newProcessList);
 		this.log = "";
 	}
 	
 	//runs the simulated PP algorithm
-	//Precondition: 
-	//Postconditions:	
+	//Precondition: A PP object exists
+	//Postconditions: The process objects have been updated with the simulated running data
 	@Override
 	void run() {
 		this.elapsedTime = 0;
@@ -68,8 +68,8 @@ public class PP extends Scheduler{
 	}
 	
 	//Get the next process from the readyQ based on priority (Lower number = higher priority)
-	//Precondition: 
-	//Postconditions:
+	//Precondition: A PP object exists
+	//Postconditions: The process with the highest priority has been returned and removed from the readyQ
 	@Override
 	Process getNext() {
 		Process next = readyQ.get(0);
@@ -87,8 +87,8 @@ public class PP extends Scheduler{
 	}
 	
 	//Get a formatted String representing the event log
-	//Precondition: 
-	//Postconditions:
+	//Precondition: A PP object exists
+	//Postconditions: A String representation of the algorithms running stats has been returned
 	@Override
 	String getEventLog() {
 		String output = "PP:\n";

@@ -24,7 +24,7 @@ public class SPN extends Scheduler{
 
 	//runs the simulated SPN algorithm
 	//Precondition: An SPN object has been created
-	//Postconditions: 
+	//Postconditions: The process objects values have been updated with their simulated running data
 	@Override
 	void run() {
 		this.elapsedTime = 0;
@@ -55,8 +55,8 @@ public class SPN extends Scheduler{
 	
 	//get the next process. Based on the process in the readyQueue
 	//that has the shortest processing time. The readyQ takes care of arrivals.
-	//Precondition: 
-	//Postconditions:	
+	//Precondition: An SPN object has been created
+	//Postconditions: The process object with the shortest processing time has been returned
 	@Override
 	Process getNext() {
 		Process next = readyQ.get(0);
@@ -70,8 +70,8 @@ public class SPN extends Scheduler{
 	}
 	
 	//Get a formatted String representing the event log
-	//Precondition: 
-	//Postconditions:	
+	//Precondition: An SPN object has been created
+	//Postconditions: A string representation of the SPN event log has been returned
 	String getEventLog() {
 		String output = "SPN:\n";
 		//sort the Process List
