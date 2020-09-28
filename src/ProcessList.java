@@ -69,7 +69,7 @@ public class ProcessList {
 			//test print
 			//System.out.println("block test output: "+blocks[i].toString());
 			//Split each block into lines separated by line breaks
-			String[] lines = blocks[i].split("\r\n");
+			String[] lines = blocks[i].split("\n");
 			Process p = new Process();
 			for(int j = 0; j < lines.length; j++) {				
 				//split the line into it's name and value, separated by ":"

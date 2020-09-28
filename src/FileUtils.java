@@ -4,9 +4,6 @@
 //Date: 02/09/2020
 
 import java.io.*;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.*;
 
 public class FileUtils {
@@ -34,22 +31,29 @@ public class FileUtils {
 		catch(Exception e){
 			System.out.println("Exception while reading text file by line: " + e.getMessage());
 		}
-		
+	
 		return result;
 	}
 	
 	//Reads the text file as one string.
 	//Precondition: None
 	//Postconditions: A String representing the text file has been returned
+	//NOTE: Changed 28/09/2020 - Quick hack to comply with java 1.8
 	public static String readTextFile(String fileName) {
-		String result = null;
-		Path path = Paths.get(fileName);
-		try{
-			result = Files.readString(path);
-			
+		String result = "";
+		try {
+			FileReader fRead = new FileReader(fileName);
+			BufferedReader bRead = new BufferedReader(fRead);
+			//priming read
+			String newLine = bRead.readLine();
+			while(newLine != null) {
+				result += newLine + "\n";
+				newLine = bRead.readLine();
+			}
+			bRead.close();
 		}
 		catch(IOException e) {
-			System.out.println("IOException while reading text file: " + e.getMessage() + "\n StackTrace: " + e.getStackTrace());
+			System.out.println("IOException while reading text file: " + e.getMessage());
 		}
 		catch(Exception e){
 			System.out.println("Exception while reading text file: " + e.getMessage());

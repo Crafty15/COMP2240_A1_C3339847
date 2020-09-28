@@ -1,3 +1,5 @@
+import java.util.Collections;
+
 //File: SPN.java
 //Purpose: Subclass of Scheduler. Simulates The Shortest Process Next scheduling algorithm.
 //			MORE INFO NEEDED	
@@ -74,6 +76,7 @@ public class SPN extends Scheduler{
 	String getEventLog() {
 		String output = "SPN:\n";
 		//sort the Process List
+		//Collections.sort(this.finishedQ , new NameSort());
 		if(this.finishedQ.isEmpty()) {
 			output += "Error: No processes have been logged.";
 		}
@@ -83,6 +86,8 @@ public class SPN extends Scheduler{
 				output += "T" + p.getStart() + ": " + p.getId() + "(" + p.getPriority() + ")\n";
 			}
 			output += "\nProcess|Turnaround Time|Waiting Time\n";
+			//sort the Process List
+			Collections.sort(this.finishedQ , new NameSort());
 			for(int i = 0; i < finishedQ.size(); i++) {
 				Process p = this.finishedQ.get(i);
 				output += p.getId() + "\t" + p.getTATime() + "\t\t" + p.getWaitTime() + "\n";
